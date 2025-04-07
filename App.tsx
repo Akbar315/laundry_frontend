@@ -1,131 +1,51 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
 import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+// import Login from './src/screens/Login'
+// import Splash from './src/screens/Splash'
+// import Otp from './src/screens/Otp'
+// import Register from './src/screens/Register'
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import Home from './src/screens/Home';
+import Account from './src/screens/Account';
+import PersonalInfo from './src/screens/PersonalInfo';
+import Editpersonalinfo from './src/screens/Editpersonalinfo';
+import CartScreen from './src/screens/orderdummy';
+import Cart from './src/screens/Cart';
+import LaundryAppUI from './src/screens/datedemo';
+import Orderhistory from './src/screens/Orderhistory';
+import Faq from './src/screens/Faq';
+import Servicedetails from './src/screens/Servicedetails';
+import Drycleaning from './src/screens/Drycleaning';
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
+const Stack = createNativeStackNavigator();
 
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
-
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  /*
-   * To keep the template simple and small we're adding padding to prevent view
-   * from rendering under the System UI.
-   * For bigger apps the reccomendation is to use `react-native-safe-area-context`:
-   * https://github.com/AppAndFlow/react-native-safe-area-context
-   *
-   * You can read more about it here:
-   * https://github.com/react-native-community/discussions-and-proposals/discussions/827
-   */
-  const safePadding = '5%';
+const App = () => {
+  console.log('hi');
 
   return (
-    <View style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        style={backgroundStyle}>
-        <View style={{paddingRight: safePadding}}>
-          <Header/>
-        </View>
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-            paddingHorizontal: safePadding,
-            paddingBottom: safePadding,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </View>
-  );
-}
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={{headerShown: false}}>
+        {/* <Stack.Screen component={Splash} name='splash' // screenOptions={{headerShown:false}} initialRouteName='splash'/>
+        <Stack.Screen component={Login} name='Login'/>
+        <Stack.Screen component={Register} name='Register'/>
+        <Stack.Screen component={Otp} name='otp'/> */}
+        <Stack.Screen name="home" component={Home} />
+        <Stack.Screen component={Account} name="account" />
+        <Stack.Screen component={PersonalInfo} name="personal_info" />
+        <Stack.Screen component={Editpersonalinfo} name="Editpersonalinfo" />
+        <Stack.Screen component={CartScreen} name="cart" />
+        <Stack.Screen component={Cart} name="carts" />
+        <Stack.Screen component={LaundryAppUI} name="date" />
+        <Stack.Screen component={Orderhistory} name="order" />
+        <Stack.Screen component={Faq} name="faq" />
+        <Stack.Screen component={Servicedetails} name="servicedetails" />
+        <Stack.Screen component={Drycleaning} name='drycleaning'/>
 
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
+
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+};
 
 export default App;
