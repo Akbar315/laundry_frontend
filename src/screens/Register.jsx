@@ -13,12 +13,14 @@ import {
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import { API_URL } from 'react-native-dotenv';
+import { useMutation } from '../../apiservice';
 const Register = ({navigation}) => {
   const [isFocused, setisFocused] = useState('');
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
   const [name, setname] = useState('');
   const [number, setnumber] = useState('');
   const [active, setactive] = useState(false);
+  const { fetchData, loading: uploading, data } = useMutation();
   // console.log("name:",name);
   // console.log("number",number);
 
@@ -34,27 +36,43 @@ const Register = ({navigation}) => {
   const handelSubmit = async ()=>{
     console.log("name2:",name);
     console.log("number2:",number);
+    if (!name && !number) {
+          Alert.alert('Error', 'Please provide at least one field');
+          return;
+        }
   
     try{
-      const response = await axios.post(
-        `${API_URL}users/register`,
-        {
-          phoneNumber:number,
-          name:name,
+      // const response = await axios.post(
+      //   `${API_URL}users/register`,
+      //   {
+      //     phoneNumber:number,
+      //     name:name,
 
-        },
-        {
-          headers:{
-            'Content-Type': 'application/json',
-          },
-        },
-      );
-      console.log(response.data);
-      navigation.navigate('otp',{phonenumber:number , otp:response.data.otp});
-    }catch (error){
-      console.error('Error:' , error);
-    }
-  };
+      //   },
+      //   {
+      //     headers:{
+      //       'Content-Type': 'application/json',
+      //     },
+      //   },
+      // );
+      // console.log(response.data);
+      // navigation.navigate('otp',{phonenumber:number , otp:response.data.otp});
+
+      const registerdata ={
+        phoneNumber:number,
+          name:name,
+      }
+       const response = await fetchData({
+      endpoint: 'users/register',
+      method: 'POST',
+      data: registerdata,
+    });
+
+  } catch (error) {
+    console.error('Upload error:', error);
+    Alert.alert('Error', 'Failed to submit form');
+  }
+};
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>

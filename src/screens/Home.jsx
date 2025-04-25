@@ -4,6 +4,11 @@ import React from 'react'
 const Home = ({navigation}) => {
   return (
     <View>
+      <View>
+        <Text>Welcome RASHIII</Text>
+      </View>
+
+
       <Text>Home</Text>
       <TouchableOpacity style={{margin:20}} onPress={()=>navigation.navigate('account')}>
         <Text>Account</Text>

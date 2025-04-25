@@ -4,17 +4,18 @@ import * as Keychain from 'react-native-keychain';
 
 const Splash = ({navigation}) => {
   useEffect(()=>{
-    setTimeout(verification,5000);
-  });
+    setTimeout(()=>{navigation.replace("Register")} 
+    ,5000);
+  } , [navigation]);
 
-  const verification = async () =>{
-    const token = await Keychain.getGenericPassword();
-    if(token){
-      navigation.replace("home");
-    }else{
-      navigation.replace("Register");
-    }
-  };
+  // const verification = async () =>{
+  //   const token = await Keychain.getGenericPassword();
+  //   if(token){
+  //     navigation.replace("home");
+  //   }else{
+  //     navigation.replace("Register");
+  //   }
+  // };
 
   return (
     <SafeAreaView style={{}}>
