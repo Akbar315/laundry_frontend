@@ -1,5 +1,6 @@
 import {View, Text, SafeAreaView} from 'react-native';
 import React from 'react';
+import moment from 'moment';
 
 const Confirm = ({Selectedservice, Selecteddate, Selectedtime}) => {
   return (
@@ -37,7 +38,8 @@ const Confirm = ({Selectedservice, Selecteddate, Selectedtime}) => {
                 paddingVertical:5
 
               }}>
-              {Selecteddate}
+              {moment(Selecteddate, 'YYYY-MM-DD').format('DD-MM-YYYY')}
+
             </Text>
           </View>
           <View>

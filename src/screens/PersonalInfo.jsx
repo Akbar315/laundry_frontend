@@ -5,17 +5,56 @@ import {
   ScrollView,
   Image,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
+import {useMutation} from '../../apiservice';
 
 const PersonalInfo = ({navigation, route}) => {
   // const {Uname, Uphone, Uemail, Ugender} = route.params;
-const [Updateddata,setUpdatedata]=useState({
-  username: route.params?.Uname || '',
-  phone: route.params?.Uphone || '',
-  email: route.params?.Uemail || '',
-  gender: route.params?.Ugender || '',
-});
+  // const [Updateddata,setUpdatedata]=useState({
+  //   username: route.params?.Uname || '',
+  //   phone: route.params?.Uphone || '',
+  //   email: route.params?.Uemail || '',
+  //   gender: route.params?.Ugender || '',
+  // });
+  const [Profiledata, setProfiledata] = useState({
+    name: '',
+    phone: '',
+    email: '',
+    gender: '',
+  });
+  const {fetchData, loading: uploading, data} = useMutation();
+
+  useEffect(() => {
+    fetchuserdetails();
+  }, []);
+
+
+  
+
+  // console.log('hello', data);
+
+  const fetchuserdetails = async () => {
+    try {
+     let resp = await fetchData({
+        endpoint: 'user/profile',
+        method: 'GET',
+      });
+      // console.log('hi---------------',resp, data)
+      if (resp) {
+        setProfiledata({
+          name: resp.name || '',
+          phone: resp.ph_no || '',
+          email: resp.email || '',
+          gender: resp.gender || '',
+        });
+      }
+    } catch (error) {
+      console.error('Upload error:', error);
+      Alert.alert('Error', 'Failed to fetch data');
+    }
+  };
   // console.log('the data------------->', Uname);
   return (
     <SafeAreaView style={{backgroundColor: 'black', flex: 1}}>
@@ -33,7 +72,9 @@ const [Updateddata,setUpdatedata]=useState({
             alignItems: 'center',
           }}>
           <View>
-            <TouchableOpacity style={{backgroundColor:"white"}} onPress={()=>navigation.goBack('account')}>
+            <TouchableOpacity
+              style={{backgroundColor: 'white'}}
+              onPress={() => navigation.goBack('account')}>
               <Text>go back </Text>
             </TouchableOpacity>
             <Text
@@ -58,12 +99,12 @@ const [Updateddata,setUpdatedata]=useState({
                   padding: 15,
                   alignItems: 'center',
                 }}>
-                {Updateddata.username}
+                {Profiledata.name}
               </Text>
             </View>
             <View>
               <Text style={{color: 'white', marginBottom: 5}}>
-                Phone Number{' '}
+                Phone Number
               </Text>
               <Text
                 style={{
@@ -74,7 +115,7 @@ const [Updateddata,setUpdatedata]=useState({
                   padding: 15,
                   alignItems: 'center',
                 }}>
-                {Updateddata.phone}
+                {Profiledata.phone}
               </Text>
             </View>
             <View>
@@ -88,7 +129,7 @@ const [Updateddata,setUpdatedata]=useState({
                   padding: 15,
                   alignItems: 'center',
                 }}>
-                {Updateddata.email}
+                {Profiledata.email}
               </Text>
             </View>
             <View>
@@ -102,7 +143,7 @@ const [Updateddata,setUpdatedata]=useState({
                   padding: 15,
                   alignItems: 'center',
                 }}>
-                {Updateddata.gender}
+                {Profiledata.gender}
               </Text>
             </View>
 

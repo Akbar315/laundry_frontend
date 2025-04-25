@@ -6,9 +6,11 @@ import {
   Image,
   TouchableOpacity,
   TextInput,
+  Alert,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import DropDownPicker from 'react-native-dropdown-picker';
+import {useMutation} from '../../apiservice';
 
 const Editpersonalinfo = ({navigation}) => {
   const [open, setOpen] = useState(false);
@@ -20,7 +22,45 @@ const Editpersonalinfo = ({navigation}) => {
   const [username, setusername] = useState('');
   const [userphone, setuserphone] = useState('');
   const [useremail, setuseremail] = useState('');
+  const {fetchData, loading: uploading, data} = useMutation();
   // const[usergender,setusergender]=useState('');
+
+  useEffect(() => {
+    fetchdetails();
+  }, []);
+
+  const fetchdetails = async () => {
+    const resp = await fetchData({
+      endpoint: 'user/profile',
+      method: 'GET',
+    });
+    if (resp) {
+      setusername(resp.name || '');
+      setuserphone(resp.ph_no || '');
+      setuseremail(resp.email || '');
+      setValue(resp.gender || '');
+    }
+  };
+
+  const handlesubmit = async () => {
+    const editteddata = {
+      name: username,
+      ph_no: userphone,
+      email: useremail,
+      gender: value,
+    };
+    try {
+      await fetchData({
+        endpoint: 'user/profile',
+        method: 'PATCH',
+        data: editteddata,
+      });
+      navigation.navigate('personal_info');
+    } catch (error) {
+      console.error('Upload error:', error);
+      Alert.alert('Error', 'Failed to update data');
+    }
+  };
 
   return (
     <SafeAreaView style={{backgroundColor: 'black', flex: 1}}>
@@ -79,7 +119,6 @@ const Editpersonalinfo = ({navigation}) => {
                 }}
                 value={userphone}
                 onChangeText={setuserphone}
-
               />
             </View>
             <View>
@@ -95,7 +134,6 @@ const Editpersonalinfo = ({navigation}) => {
                 }}
                 value={useremail}
                 onChangeText={setuseremail}
-
               />
             </View>
             <View>
@@ -136,14 +174,7 @@ const Editpersonalinfo = ({navigation}) => {
                 borderRadius: 11,
                 marginTop: 90,
               }}
-              onPress={() =>
-                navigation.navigate('personal_info', {
-                  Uname: username,
-                  Uphone: userphone,
-                  Uemail: useremail,
-                  Ugender: value,
-                })
-              }>
+              onPress={() => handlesubmit()}>
               <Text style={{color: 'white', fontSize: 20, textAlign: 'center'}}>
                 Save Changes
               </Text>

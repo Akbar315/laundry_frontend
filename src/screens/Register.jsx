@@ -11,16 +11,14 @@ import {
   Alert,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
-import axios from 'axios';
-import { API_URL } from 'react-native-dotenv';
-import { useMutation } from '../../apiservice';
+import {useMutation} from '../../apiservice';
 const Register = ({navigation}) => {
   const [isFocused, setisFocused] = useState('');
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
   const [name, setname] = useState('');
   const [number, setnumber] = useState('');
   const [active, setactive] = useState(false);
-  const { fetchData, loading: uploading, data } = useMutation();
+  const {fetchData, loading: uploading, data} = useMutation();
   // console.log("name:",name);
   // console.log("number",number);
 
@@ -31,48 +29,31 @@ const Register = ({navigation}) => {
       setactive(false);
     }
   }, [name, number, toggleCheckBox]);
-  console.log("fgdgfdgdg")
 
-  const handelSubmit = async ()=>{
-    console.log("name2:",name);
-    console.log("number2:",number);
+  const handelSubmit = async () => {
     if (!name && !number) {
-          Alert.alert('Error', 'Please provide at least one field');
-          return;
-        }
-  
-    try{
-      // const response = await axios.post(
-      //   `${API_URL}users/register`,
-      //   {
-      //     phoneNumber:number,
-      //     name:name,
+      Alert.alert('Error', 'Please provide at least one field');
+      return;
+    }
 
-      //   },
-      //   {
-      //     headers:{
-      //       'Content-Type': 'application/json',
-      //     },
-      //   },
-      // );
-      // console.log(response.data);
-      // navigation.navigate('otp',{phonenumber:number , otp:response.data.otp});
+    try {
+      const registerdata = {
+        ph_no: number,
+        name: name,
+      };
 
-      const registerdata ={
-        phoneNumber:number,
-          name:name,
-      }
-       const response = await fetchData({
-      endpoint: 'users/register',
-      method: 'POST',
-      data: registerdata,
-    });
-
-  } catch (error) {
-    console.error('Upload error:', error);
-    Alert.alert('Error', 'Failed to submit form');
-  }
-};
+      const response = await fetchData({
+        endpoint: 'auth/register',
+        method: 'POST',
+        data: registerdata,
+      });
+      console.log('response ', response.otp);
+      navigation.navigate('otp', {phonenumber: number, otp: response.otp});
+    } catch (error) {
+      console.error('Upload error:', error);
+      Alert.alert('Error', 'Failed to register');
+    }
+  };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -167,7 +148,7 @@ const Register = ({navigation}) => {
                           setnumber(value);
                         }
                       }}
-                      maxLength={10 }
+                      maxLength={10}
                       placeholder="Enter Phone"
                       placeholderTextColor={'white'}
                       keyboardType="phone-pad"
@@ -250,7 +231,7 @@ const Register = ({navigation}) => {
                 onPress={() => {
                   // Alert.alert('otp have sent');
                   handelSubmit();
-                  navigation.navigate('otp',{phonenumber:number});
+                  // navigation.navigate('otp', {phonenumber: number});
                 }}>
                 <Text style={{color: 'white', fontSize: 23, padding: 6}}>
                   Get OTP

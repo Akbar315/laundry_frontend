@@ -12,12 +12,15 @@ import {
 import axios from 'axios';
 import {API_URL} from 'react-native-dotenv';
 import React, {useEffect, useState} from 'react';
-import { resolver } from '../../metro.config';
+import {resolver} from '../../metro.config';
+import {useMutation} from '../../apiservice';
 
 const Login = ({navigation}) => {
   const [selected, setselected] = useState(false);
   const [phone, setphone] = useState('');
   const [Active, setActive] = useState(false);
+  const {fetchData, loading: uploading, data} = useMutation();
+
   useEffect(() => {
     if (phone !== '') {
       setActive(true);
@@ -25,33 +28,48 @@ const Login = ({navigation}) => {
       setActive(false);
     }
   }, [phone]);
-  console.log("nchhhjvvh");
 
   const handleSubmit = async () => {
-    try {
-      const response = await axios.post(
-        `${API_URL}users/login`,
-        {
-          phoneNumber: phone,
-          // role:'user'
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        },
-      );
-
-      // navigation.navigate('UserOtp', {
-      //   phone: phone,
-      //   otp: response.data.otp,
-      // });
-      console.log("passing otp:",response.data);
-      navigation.navigate('otp', {phonenumber: phone, otp: response.data.otp});
-      // Alert.alert('Success', 'Data posted successfully');
-    } catch (error) {
-      console.error('Error:', error);
+    if (!phone) {
+      Alert.alert('Error', 'please provide phonenumber');
     }
+    try {
+      const logindata = {
+        ph_no: phone,
+      };
+
+      const response = await fetchData({
+        endpoint: 'auth/login',
+        method: 'POST',
+        data: logindata,
+      });
+      console.log('passing otp:', response.otp);
+      navigation.navigate('otp', {phonenumber: phone, otp: response.otp});
+
+      // const response = await axios.post(
+      //   `${API_URL}users/login`,
+      //   {
+      //     phoneNumber: phone,
+      //     // role:'user'
+      //   },
+      //   {
+      //     headers: {
+      //       'Content-Type': 'application/json',
+      //     },
+      //   },
+      // );
+
+      // // navigation.navigate('UserOtp', {
+      // //   phone: phone,
+      // //   otp: response.data.otp,
+      // // });
+      // console.log("passing otp:",response.data);
+      // navigation.navigate('otp', {phonenumber: phone, otp: response.data.otp});
+      // // Alert.alert('Success', 'Data posted successfully');
+    }catch (error) {
+        console.error('Upload error:', error);
+        Alert.alert('Error', 'Failed to login');
+      }
   };
 
   return (
@@ -151,7 +169,7 @@ const Login = ({navigation}) => {
                   onPress={() => {
                     navigation.navigate('Register');
                   }}>
-                  <Text style={{color: 'white', fontSize: 18,}}>SIGNUP</Text>
+                  <Text style={{color: 'white', fontSize: 18}}>SIGNUP</Text>
                 </TouchableOpacity>
               </View>
             </View>

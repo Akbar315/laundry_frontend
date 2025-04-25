@@ -42,7 +42,7 @@ const initialOrders = [
 ];
 
 const OrderHistory = ({navigation}) => {
-  const [selectedTab, setSelectedTab] = useState('All'); // 'All', 'Active Orders', 'Completed', 'Canceled'
+  const [selectedTab, setSelectedTab] = useState('All'); 
   const [orders, setOrders] = useState(initialOrders);
   const [searchText, setSearchText] = useState('');
 
@@ -54,7 +54,6 @@ const OrderHistory = ({navigation}) => {
     );
   };
 
-  // Filter orders based on selected tab and search text
   const filteredOrders = orders.filter(order => {
     const statusMatch =
       selectedTab === 'All' ||
@@ -152,7 +151,6 @@ const OrderHistory = ({navigation}) => {
   };
 
   return (
-    // Use fragment <></> or <SafeAreaView> depending on needs
     <SafeAreaView style={{flex: 1, backgroundColor: 'black'}}>
       {/* <StatusBar barStyle="light-content" backgroundColor="#121212" /> */}
 

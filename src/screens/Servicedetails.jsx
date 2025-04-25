@@ -6,19 +6,21 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import React from 'react';
+import { useNavigation } from '@react-navigation/native';
 
-const Servicedetails = ({navigation}) => {
+const Servicedetails = () => {
+  const navigation = useNavigation()
   return (
     <SafeAreaView style={{backgroundColor: 'black', flex: 1}}>
-      <View style={{backgroundColor: 'orange', padding: 20}}>
+      <View style={{backgroundColor: 'black', padding: 20}}>
         <Text
           style={{
-            textAlign: 'center',
+            // textAlign: 'center',
             color: 'white',
             fontSize: 30,
             fontWeight: 500,
           }}>
-          Services
+          Our Services
         </Text>
       </View>
       <ScrollView style={{padding: 15, flex: 1}}>

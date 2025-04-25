@@ -12,10 +12,12 @@ import Datetime from './Datetime';
 import moment from 'moment';
 import Confirm from './Confirm';
 import Confirmation from './Confirmation';
+import {useMutation} from '../../apiservice';
 
 const Cart = ({navigation}) => {
   const [current, setcurrent] = useState(1);
   const [Selectedservice, setSelectedservice] = useState([]);
+  const {fetchData, loading: uploading, data} = useMutation();
 
   const handelSelectedService = service => {
     setSelectedservice(prev => {
@@ -63,12 +65,36 @@ const Cart = ({navigation}) => {
   };
 
   const handleConfirmation = () => {
-    setcurrent(4)
+    handledata();
+    setcurrent(4);
+  };
+
+  const handledata = async () => {
+    try {
+      const bookingdata = {
+        services: Selectedservice,
+        booking_date: Slecteddate,
+        booking_time: Slectedtime,
+      };
+      const response = await fetchData({
+        endpoint: 'bookings',
+        method: 'POST',
+        data: bookingdata,
+      });
+      console.log('data---------------->', response);
+    } catch (error) {
+      console.error('Upload error:', error);
+      Alert.alert('Error', 'Failed to upload booking data');
+    }
   };
   return (
     <SafeAreaView style={{backgroundColor: 'black', flex: 1}}>
       <View style={{flex: 1}}>
-        <View style={{backgroundColor: 'orange',height:current===4 ?80:"auto"}}>
+        <View
+          style={{
+            backgroundColor: 'orange',
+            height: current === 4 ? 80 : 'auto',
+          }}>
           <Text
             style={{
               textAlign: 'center',
@@ -82,14 +108,29 @@ const Cart = ({navigation}) => {
           <View
             style={{flexDirection: 'row', justifyContent: 'center', gap: 40}}>
             <Text
-              style={{fontSize: 18, color: current === 1 ? 'blue' : 'white',opacity: current === 4 ? 0 : 1}}>
+              style={{
+                fontSize: 18,
+                color: current === 1 ? 'blue' : 'white',
+                opacity: current === 4 ? 0 : 1,
+              }}>
               Build Cart
             </Text>
             <Text
-              style={{fontSize: 18, color: current === 2 ? 'blue' : 'white',opacity: current === 4 ? 0 : 1}}>
+              style={{
+                fontSize: 18,
+                color: current === 2 ? 'blue' : 'white',
+                opacity: current === 4 ? 0 : 1,
+              }}>
               Date & Time
             </Text>
-            <Text style={{fontSize: 18 , color: current === 3 ? 'blue' : 'white',opacity: current === 4 ? 0 : 1}}>Confirm</Text>
+            <Text
+              style={{
+                fontSize: 18,
+                color: current === 3 ? 'blue' : 'white',
+                opacity: current === 4 ? 0 : 1,
+              }}>
+              Confirm
+            </Text>
           </View>
         </View>
         <ScrollView contentContainerStyle={{padding: 10, flexGrow: 1}}>
@@ -115,11 +156,7 @@ const Cart = ({navigation}) => {
               Selectedtime={Slectedtime}
             />
           )}
-          {current === 4 && (
-            <Confirmation />
-          )
-
-          }
+          {current === 4 && <Confirmation />}
         </ScrollView>
         {current <= 3 && (
           <View

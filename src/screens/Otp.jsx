@@ -6,21 +6,22 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   Keyboard,
+  Alert,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import Toast from 'react-native-toast-message';
-import axios from 'axios';
-import {API_URL} from 'react-native-dotenv';
-import * as Keychain from 'react-native-keychain';
+import {getAuthToken, useMutation} from '../../apiservice';
 
 const Otp = ({navigation, route}) => {
   const [otp, setotp] = useState('');
   const [activate, setactivate] = useState(false);
   const [isSelect, setisSelect] = useState(false);
   const [receivedOtp, setReceivedOtp] = useState('');
+  const {fetchData, loading: uploading, data} = useMutation();
+
   // const[recievedtoken ,setrecievedtoken] = useState('');
 
-  console.log("otp recieved",receivedOtp);
+  console.log('otp recieved', receivedOtp);
 
   const {phonenumber, otp: receivedOTP} = route.params;
 
@@ -38,46 +39,53 @@ const Otp = ({navigation, route}) => {
     console.log('server:', phonenumber);
     console.log('server2', receivedOtp);
     try {
-      const response = await axios.post(
-        `${API_URL}users/verify-otp`,
-        {
-          phoneNumber: phonenumber,
-          otp: receivedOtp,
-          // role: 'user',
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        },
-      );
-      // setrecievedtoken(response.data.authToken);
-      console.log(response.data);
-      tokenauth(response.data.authToken);
+      const otpdata = {
+        ph_no: phonenumber,
+        otp: receivedOtp,
+      };
+      const response = await fetchData({
+        endpoint: 'auth/verify-otp',
+        method: 'POST',
+        data: otpdata,
+      });
+
+      // const response = await axios.post(
+      //   `${API_URL}users/verify-otp`,
+      //   {
+      //     phoneNumber: phonenumber,
+      //     otp: receivedOtp,
+      //     // role: 'user',
+      //   },
+      //   {
+      //     headers: {
+      //       'Content-Type': 'application/json',
+      //     },
+      //   },
+      // );
+      // // setrecievedtoken(response.data.authToken);
+      // console.log(response.data);
+      // tokenauth(response.data.authToken);
+       navigation.navigate('home')
     } catch (error) {
-      console.error('Error :', error);
+      console.error('Upload error:', error);
+      Alert.alert('Error', 'Failed to verify');
     }
   };
 
   //
-  console.log('xfhnvjv');
   const handleSubmit = async () => {
     try {
-      const response = await axios.post(
-        ` ${API_URL}users/login`,
-        {
-          phoneNumber: phonenumber,
-          // role: 'user',
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        },
-      );
-      console.log(response.data.otp);
+      const logindata = {
+        ph_no: phonenumber,
+      };
 
-      setReceivedOtp(response.data.otp);
+      const response = await fetchData({
+        endpoint: 'auth/login',
+        method: 'POST',
+        data: logindata,
+      });
+      console.log(response.otp);
+      setReceivedOtp(response.otp);
 
       // navigation.navigate('UserOtp', {
       //   phone: phone,
@@ -86,7 +94,8 @@ const Otp = ({navigation, route}) => {
       // navigation.navigate('otp', {phonenumber: phone, otp: response.data.otp});
       // Alert.alert('Success', 'Data posted successfully');
     } catch (error) {
-      console.error('Error:', error);
+      console.error('Upload error:', error);
+      Alert.alert('Error', 'Failed to resend otp');
     }
   };
 
@@ -100,29 +109,29 @@ const Otp = ({navigation, route}) => {
 
   //Token
 
-  const tokenauth = async recievedtoken => {
-    const token = recievedtoken;
- 
-    console.log('reached here---------------------------', token);
+  // const tokenauth = async recievedtoken => {
+  //   const token = recievedtoken;
 
-    await Keychain.setGenericPassword('keyToken', token);
+  //   console.log('reached here---------------------------', token);
 
-    try {
-    console.log('reached here-------------2--------------');
-    const credentials = await Keychain.getGenericPassword();
-    console.log('reached here-------------3--------------', credentials);
-    if (credentials) {
-      console.log('succesfully retrieved' + credentials.password);
-      navigation.navigate('home');
-    } else {
-      console.log('no credential is stored');
-    }
-    } catch (error) {
-      console.error('failed ', error);
-    }
+  //   await Keychain.setGenericPassword('keyToken', token);
 
-    // await Keychain.resetGenericPassword();
-  };
+  //   try {
+  //   console.log('reached here-------------2--------------');
+  //   const credentials = await Keychain.getGenericPassword();
+  //   console.log('reached here-------------3--------------', credentials);
+  //   if (credentials) {
+  //     console.log('succesfully retrieved' + credentials.password);
+  //     navigation.navigate('home');
+  //   } else {
+  //     console.log('no credential is stored');
+  //   }
+  //   } catch (error) {
+  //     console.error('failed ', error);
+  //   }
+
+  //   // await Keychain.resetGenericPassword();
+  // };
 
   const Timer = () => {
     const [seconds, setSeconds] = useState(30); // Start at 30 seconds

@@ -17,6 +17,10 @@ import Orderhistory from './src/screens/Orderhistory';
 import Faq from './src/screens/Faq';
 import Servicedetails from './src/screens/Servicedetails';
 import Drycleaning from './src/screens/Drycleaning';
+import Splash from './src/screens/Splash';
+import Login from './src/screens/Login';
+import Register from './src/screens/Register';
+import Otp from './src/screens/Otp';
 
 const Stack = createNativeStackNavigator();
 
@@ -25,11 +29,11 @@ const App = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown: false}}>
-        {/* <Stack.Screen component={Splash} name='splash' // screenOptions={{headerShown:false}} initialRouteName='splash'/>
+      <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName='splash'>
+        <Stack.Screen component={Splash} name='splash'/>
         <Stack.Screen component={Login} name='Login'/>
         <Stack.Screen component={Register} name='Register'/>
-        <Stack.Screen component={Otp} name='otp'/> */}
+        <Stack.Screen component={Otp} name='otp'/>
         <Stack.Screen name="home" component={Home} />
         <Stack.Screen component={Account} name="account" />
         <Stack.Screen component={PersonalInfo} name="personal_info" />
