@@ -61,7 +61,7 @@ const Servicedetails = () => {
               flexDirection: 'row',
               justifyContent: 'space-between',
               alignItems: 'center',
-            }}>
+            }} onPress={() => navigation.navigate('drycleaning')}>
             <Text style={{color: 'white', fontSize: 20}}>Premium laundry</Text>
             <Text style={{color: 'white', fontSize: 20}}> {'>'} </Text>
           </TouchableOpacity>
@@ -81,7 +81,7 @@ const Servicedetails = () => {
               flexDirection: 'row',
               justifyContent: 'space-between',
               alignItems: 'center',
-            }}>
+            }}onPress={() => navigation.navigate('drycleaning')}>
             <Text style={{color: 'white', fontSize: 20}}>Laundry</Text>
             <Text style={{color: 'white', fontSize: 20}}> {'>'} </Text>
           </TouchableOpacity>
@@ -101,7 +101,7 @@ const Servicedetails = () => {
               flexDirection: 'row',
               justifyContent: 'space-between',
               alignItems: 'center',
-            }}>
+            }}onPress={() => navigation.navigate('drycleaning')}>
             <Text style={{color: 'white', fontSize: 20}}>steam Press</Text>
             <Text style={{color: 'white', fontSize: 20}}> {'>'} </Text>
           </TouchableOpacity>
@@ -121,7 +121,7 @@ const Servicedetails = () => {
               flexDirection: 'row',
               justifyContent: 'space-between',
               alignItems: 'center',
-            }}>
+            }}onPress={() => navigation.navigate('drycleaning')}>
             <Text style={{color: 'white', fontSize: 20}}>Shoe Cleaning</Text>
             <Text style={{color: 'white', fontSize: 20}}> {'>'} </Text>
           </TouchableOpacity>
@@ -141,7 +141,7 @@ const Servicedetails = () => {
               flexDirection: 'row',
               justifyContent: 'space-between',
               alignItems: 'center',
-            }}>
+            }}onPress={() => navigation.navigate('drycleaning')}>
             <Text style={{color: 'white', fontSize: 20}}>Bag Cleaning</Text>
             <Text style={{color: 'white', fontSize: 20}}> {'>'} </Text>
           </TouchableOpacity>
@@ -161,7 +161,7 @@ const Servicedetails = () => {
               flexDirection: 'row',
               justifyContent: 'space-between',
               alignItems: 'center',
-            }}>
+            }}onPress={() => navigation.navigate('drycleaning')}>
             <Text style={{color: 'white', fontSize: 20}}>Carpet Cleaning</Text>
             <Text style={{color: 'white', fontSize: 20}}> {'>'} </Text>
           </TouchableOpacity>
@@ -181,7 +181,7 @@ const Servicedetails = () => {
               flexDirection: 'row',
               justifyContent: 'space-between',
               alignItems: 'center',
-            }}>
+            }}onPress={() => navigation.navigate('drycleaning')}>
             <Text style={{color: 'white', fontSize: 20}}>Curtain Cleaning</Text>
             <Text style={{color: 'white', fontSize: 20}}> {'>'} </Text>
           </TouchableOpacity>
