@@ -21,6 +21,7 @@ import Splash from './src/screens/Splash';
 import Login from './src/screens/Login';
 import Register from './src/screens/Register';
 import Otp from './src/screens/Otp';
+import Price from './src/screens/Price';
 
 const Stack = createNativeStackNavigator();
 
@@ -45,6 +46,7 @@ const App = () => {
         <Stack.Screen component={Faq} name="faq" />
         <Stack.Screen component={Servicedetails} name="servicedetails" />
         <Stack.Screen component={Drycleaning} name='drycleaning'/>
+        <Stack.Screen component={Price} name='price'/>
 
 
       </Stack.Navigator>

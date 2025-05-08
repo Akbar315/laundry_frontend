@@ -97,11 +97,10 @@ const Home = () => {
           </TouchableOpacity>
           <TouchableOpacity
             style={{alignItems: 'center', justifyContent: 'center', flex: 1}}
-            onPress={() => navigation.navigate('servicedetails')}>
+            onPress={() => navigation.navigate('price')} >
             <Text style={{fontSize: 10, color: '#AAAAAA'}}>Price List</Text>
           </TouchableOpacity>
 
-          {/* Spacer for the Add button area */}
           <View style={{width: 60}} />
 
           <TouchableOpacity

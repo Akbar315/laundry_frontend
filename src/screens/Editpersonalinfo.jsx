@@ -65,12 +65,40 @@ const Editpersonalinfo = ({navigation}) => {
   return (
     <SafeAreaView style={{backgroundColor: 'black', flex: 1}}>
       <ScrollView>
-        <View style={{backgroundColor: 'orange', paddingHorizontal: 10}}>
-          <Image
-            style={{height: 100, width: 220, resizeMode: 'contain'}}
-            source={require('../assets/images/Laundrylogo.webp')}
-          />
-        </View>
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          // paddingVertical: 15,
+          // paddingHorizontal: 15,
+          padding: 18,
+          backgroundColor: 'orange',
+          borderBottomWidth: 1,
+          borderBottomColor: '#333',
+        }}>
+        <TouchableOpacity onPress={() => navigation.navigate('personal_info')}>
+          <Text
+            style={{
+              color: '#FFFFFF',
+              fontSize: 28,
+              fontWeight: 'bold',
+              marginRight: 10,
+            }}>
+            {'‹'}
+          </Text>
+        </TouchableOpacity>
+        <Text
+          style={{
+            color: '#FFFFFF',
+            fontSize: 30,
+            fontWeight: 'bold',
+          }}>
+          Edit Personal Info
+        </Text>
+        <View style={{width: 30}} />
+      </View>
+
         <View
           style={{
             paddingHorizontal: 10,
@@ -85,7 +113,6 @@ const Editpersonalinfo = ({navigation}) => {
                 textAlign: 'center',
                 margin: 10,
               }}>
-              Edit Personal Info
             </Text>
           </View>
           <View style={{width: '90%', flexDirection: 'column', gap: 20}}>
@@ -172,7 +199,7 @@ const Editpersonalinfo = ({navigation}) => {
                 backgroundColor: 'blue',
                 padding: 15,
                 borderRadius: 11,
-                marginTop: 90,
+                marginTop: 50,
               }}
               onPress={() => handlesubmit()}>
               <Text style={{color: 'white', fontSize: 20, textAlign: 'center'}}>

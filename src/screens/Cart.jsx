@@ -49,7 +49,7 @@ const Cart = ({navigation}) => {
           ],
         );
       } else {
-        setcurrent(current + 1);
+        setcurrent(3);
       }
     }
   };

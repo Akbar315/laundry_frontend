@@ -30,14 +30,11 @@ const PersonalInfo = ({navigation, route}) => {
     fetchuserdetails();
   }, []);
 
-
-  
-
   // console.log('hello', data);
 
   const fetchuserdetails = async () => {
     try {
-     let resp = await fetchData({
+      let resp = await fetchData({
         endpoint: 'user/profile',
         method: 'GET',
       });
@@ -55,16 +52,48 @@ const PersonalInfo = ({navigation, route}) => {
       Alert.alert('Error', 'Failed to fetch data');
     }
   };
+  const handleDeactivate = ()=>{
+    console.log("account deactivated successfully")
+    navigation.navigate("Login")
+  }
   // console.log('the data------------->', Uname);
   return (
     <SafeAreaView style={{backgroundColor: 'black', flex: 1}}>
       <ScrollView>
-        <View style={{backgroundColor: 'orange', paddingHorizontal: 10}}>
-          <Image
-            style={{height: 100, width: 220, resizeMode: 'contain'}}
-            source={require('../assets/images/Laundrylogo.webp')}
-          />
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            // paddingVertical: 15,
+            // paddingHorizontal: 15,
+            padding: 18,
+            backgroundColor: 'orange',
+            borderBottomWidth: 1,
+            borderBottomColor: '#333',
+          }}>
+          <TouchableOpacity onPress={() => navigation.navigate('account')}>
+            <Text
+              style={{
+                color: '#FFFFFF',
+                fontSize: 28,
+                fontWeight: 'bold',
+                marginRight: 10,
+              }}>
+              {'‹'}
+            </Text>
+          </TouchableOpacity>
+          <Text
+            style={{
+              color: '#FFFFFF',
+              fontSize: 30,
+              fontWeight: 'bold',
+            }}>
+            Personal Info
+          </Text>
+          <View style={{width: 30}} />
         </View>
+
         <View
           style={{
             paddingHorizontal: 10,
@@ -72,22 +101,27 @@ const PersonalInfo = ({navigation, route}) => {
             alignItems: 'center',
           }}>
           <View>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               style={{backgroundColor: 'white'}}
               onPress={() => navigation.goBack('account')}>
               <Text>go back </Text>
-            </TouchableOpacity>
-            <Text
+            </TouchableOpacity> */}
+            {/* <Text
               style={{
-                color: 'white',
                 fontSize: 30,
                 textAlign: 'center',
                 margin: 10,
               }}>
               Personal Info
-            </Text>
+            </Text> */}
           </View>
-          <View style={{width: '90%', flexDirection: 'column', gap: 20}}>
+          <View
+            style={{
+              width: '90%',
+              flexDirection: 'column',
+              gap: 20,
+              marginTop: 40,
+            }}>
             <View>
               <Text style={{color: 'white', marginBottom: 5}}>User Name </Text>
               <Text
@@ -160,7 +194,23 @@ const PersonalInfo = ({navigation, route}) => {
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={{backgroundColor: 'red', padding: 15, borderRadius: 11}}>
+              style={{backgroundColor: 'red', padding: 15, borderRadius: 11}}
+              onPress={() =>
+                Alert.alert(
+                  'Confirmation',
+                  'Do you want to deactivate your account?',
+                  [
+                    {
+                      text: 'Back',
+                      style: 'cancel',
+                    },
+                    {
+                      text: 'Confirm',
+                      onPress: () => handleDeactivate(), // Call your deactivate function
+                    },
+                  ],
+                )
+              }>
               <Text style={{color: 'white', fontSize: 20, textAlign: 'center'}}>
                 Deactivate Account
               </Text>
